@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Meu Treino" />
+  <meta name="description" content="Plano semanal de treino, dieta e acompanhamento no celular." />
+  <title>Meu Treino</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icon-180.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-top">
+    <div>
+      <p class="eyebrow">app pessoal</p>
+      <h1>Meu Treino</h1>
+      <p class="subtitle">Treino, dieta agressiva e acompanhamento para emagrecer e melhorar no futebol.</p>
+    </div>
+    <button id="installTipBtn" class="secondary">Como colocar na tela inicial</button>
+  </header>
+
+  <main class="container">
+    <section class="card install-banner" id="installBanner">
+      <div>
+        <strong>Adicionar à área de trabalho</strong>
+        <p>No iPhone: toque em compartilhar no Safari e depois em <b>Adicionar à Tela de Início</b>.</p>
+      </div>
+      <button id="hideInstallBanner" class="secondary">Fechar</button>
+    </section>
+
+    <section class="card stats-grid">
+      <div>
+        <span class="stat-label">Peso inicial</span>
+        <strong>85 kg</strong>
+      </div>
+      <div>
+        <span class="stat-label">Meta</span>
+        <strong>60 kg</strong>
+      </div>
+      <div>
+        <span class="stat-label">Peso atual</span>
+        <strong id="currentWeightDisplay">—</strong>
+      </div>
+      <div>
+        <span class="stat-label">Itens concluídos</span>
+        <strong id="completedWorkoutsDisplay">0</strong>
+      </div>
+    </section>
+
+    <nav class="quick-nav card">
+      <a href="#hoje">Hoje</a>
+      <a href="#rotina">Rotina</a>
+      <a href="#dieta">Dieta</a>
+      <a href="#progresso">Progresso</a>
+      <a href="#resumo">Resumo</a>
+    </nav>
+
+    <section class="card today-card" id="hoje">
+      <div class="section-head">
+        <h2>Hoje</h2>
+        <span class="tag" id="todayBadge">—</span>
+      </div>
+      <div id="todayContent"></div>
+    </section>
+
+    <section class="grid-two" id="progresso">
+      <section class="card">
+        <h2>Registrar peso</h2>
+        <form id="weightForm" class="stack gap-sm">
+          <label>
+            Peso atual (kg)
+            <input type="number" step="0.1" min="1" id="weightInput" placeholder="Ex.: 84.2" required />
+          </label>
+          <label>
+            Data
+            <input type="date" id="weightDateInput" required />
+          </label>
+          <button type="submit">Salvar peso</button>
+        </form>
+        <div class="progress-block">
+          <div class="progress-top">
+            <span>Progresso até a meta</span>
+            <span id="progressPercent">0%</span>
+          </div>
+          <div class="progress-bar"><div id="progressFill"></div></div>
+          <p class="hint" id="progressText">Adicione seu peso para ver seu progresso.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Observações</h2>
+        <label class="stack gap-xs">
+          Como você está hoje?
+          <textarea id="dailyNotes" rows="7" placeholder="Ex.: dormi bem, senti fome, treinei cansado, escapei da dieta..."></textarea>
+        </label>
+        <div class="button-row">
+          <button id="saveNotesBtn" class="secondary full">Salvar observações</button>
+          <button id="resetBtn" class="danger full">Limpar dados</button>
+        </div>
+      </section>
+    </section>
+
+    <section class="card" id="rotina">
+      <div class="section-head">
+        <h2>Rotina semanal</h2>
+        <span class="hint">Marque o que fez. Fica salvo no navegador.</span>
+      </div>
+      <div id="schedule" class="schedule"></div>
+    </section>
+
+    <section class="grid-two" id="dieta">
+      <section class="card">
+        <h2>Dieta agressiva completa</h2>
+        <div id="dietPlan" class="diet-plan"></div>
+      </section>
+      <section class="card">
+        <h2>Histórico</h2>
+        <div class="history-block">
+          <h3>Pesos registrados</h3>
+          <ul id="weightHistory" class="history-list"></ul>
+        </div>
+        <div class="history-block">
+          <h3>Últimos itens marcados</h3>
+          <ul id="workoutHistory" class="history-list"></ul>
+        </div>
+      </section>
+    </section>
+
+    <section class="card" id="resumo">
+      <div class="section-head">
+        <h2>Resumo para me mandar aqui</h2>
+        <div class="button-row compact">
+          <button id="exportSummaryBtn">Gerar resumo</button>
+          <button id="copySummaryBtn" class="secondary">Copiar</button>
+        </div>
+      </div>
+      <p class="hint">Gere o resumo, copie e cole aqui na conversa para eu acompanhar sua evolução.</p>
+      <textarea id="summaryOutput" rows="11" readonly placeholder="Seu resumo vai aparecer aqui."></textarea>
+    </section>
+  </main>
+
+  <dialog id="installDialog">
+    <div class="dialog-body">
+      <h3>Colocar na área de trabalho</h3>
+      <ol>
+        <li>Abra este arquivo no <b>Safari</b>.</li>
+        <li>Toque no botão de <b>compartilhar</b>.</li>
+        <li>Toque em <b>Adicionar à Tela de Início</b>.</li>
+        <li>Confirme em <b>Adicionar</b>.</li>
+      </ol>
+      <button id="closeInstallDialog">Fechar</button>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
